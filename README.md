@@ -7,12 +7,12 @@ Basic wrapper for the PHP proc_* functions (blocking, single-thread only).
 use \PhpProc\Process;
 
 $process = new Process();
-
-$process->setCommand("/usr/bin/php -r \"echo getenv('USER');\"");
-$process->setWorkingDirectory(__DIR__);
-$process->setEnvironmentVars(array(
-    'USER' => 'developer'
-));
+$process
+    ->setCommand("/usr/bin/php -r \"echo getenv('USER');\"");
+    ->setWorkingDirectory(__DIR__);
+    ->setEnvironmentVars(array(
+        'USER' => 'developer'
+    ));
 
 $result = $process->execute();
 
