@@ -8,7 +8,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetAndSetCommand()
     {
-        $command = '/usr/bin/php';
+        $command = 'php';
 
         $process = new Process();
 
@@ -47,7 +47,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
 
         $message = 'Joey likes pizza.';
 
-        $process->setCommand("/usr/bin/php -r \"echo '{$message}';\"");
+        $process->setCommand("hp -r \"echo '{$message}';\"");
         $result = $process->execute();
 
         $this->assertSame(0, $result->getStatus());
@@ -60,7 +60,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
 
         $workingDirectory = __DIR__;
 
-        $process->setCommand("/usr/bin/php -r \"echo getcwd();\"");
+        $process->setCommand("php -r \"echo getcwd();\"");
         $process->setWorkingDirectory($workingDirectory);
         $result = $process->execute();
 
@@ -74,7 +74,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
 
         $workingDirectory = '/fake/' . __DIR__;
 
-        $process->setCommand("/usr/bin/php -r \"echo getcwd();\"");
+        $process->setCommand("php -r \"echo getcwd();\"");
         $process->setWorkingDirectory($workingDirectory);
 
         $this->setExpectedException('\PhpProc\Exception\RuntimeException');
@@ -91,7 +91,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
             'USER' => 'Joey Tribbiani'
         );
 
-        $process->setCommand("/usr/bin/php -r \"echo getenv('USER');\"");
+        $process->setCommand("php -r \"echo getenv('USER');\"");
         $process->setEnvironmentVars($vars);
         $result = $process->execute();
 
@@ -105,7 +105,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
 
         $code = 100;
 
-        $process->setCommand("/usr/bin/php -r \"exit({$code});\"");
+        $process->setCommand("php -r \"exit({$code});\"");
         $result = $process->execute();
 
         $this->assertSame($code, $result->getStatus());
@@ -115,7 +115,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     {
         $process = new Process();
 
-        $process->setCommand("/usr/bin/php -r \"trigger_error('error', E_USER_ERROR);\"");
+        $process->setCommand("php -r \"trigger_error('error', E_USER_ERROR);\"");
         $result = $process->execute();
 
         $this->assertSame(255, $result->getStatus());

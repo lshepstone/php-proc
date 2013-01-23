@@ -3,7 +3,7 @@ PhpProc
 
 Basic wrapper for the PHP proc_* functions (blocking, single-thread only).
 
-[![Build Status](https://api.travis-ci.org/lshepstone/php-proc.png)](https://travis-ci.org/lshepstone/php-proc)
+[![Build Status](https://travis-ci.org/lshepstone/php-proc.png?branch=master)](https://travis-ci.org/lshepstone/php-proc)
 
 Using
 
