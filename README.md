@@ -3,6 +3,10 @@ PhpProc
 
 Basic wrapper for the PHP proc_* functions (blocking, single-thread only).
 
+[Travis CI](https://api.travis-ci.org/lshepstone/php-proc.png)
+
+Using
+
 ```php
 use \PhpProc\Process;
 
@@ -21,7 +25,7 @@ if ($result->hasErrors()) {
 }
 ```
 
-Results in:
+produces
 
 ```
 Status: 0
