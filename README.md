@@ -16,11 +16,11 @@ $process->setEnvironmentVars(array(
 
 $result = $process->execute();
 
-echo 'Status: ' . $result->getStatus();
+echo 'Status: ' . $result->getStatus() . PHP_EOL;
 if ($result->hasErrors()) {
-    'Errors: ' . $result->getStdErrContents();
+    echo 'Errors: ' . $result->getStdErrContents();
 } else {
-    'Output: ' . $result->getStdOutContents();
+    echo 'Output: ' . $result->getStdOutContents();
 }
 ```
 
