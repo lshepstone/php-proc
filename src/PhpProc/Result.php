@@ -77,12 +77,12 @@ class Result
     }
 
     /**
-     * Determines if the result describes errors or not.
+     * Determines if the result describes errors or exited with a non-zero status code, or not.
      *
      * @return bool
      */
     public function hasErrors()
     {
-        return $this->stdErrContents ? true : false;
+        return ($this->stdErrContents || 0 !== $this->status) ? true : false;
     }
 }

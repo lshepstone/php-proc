@@ -51,6 +51,13 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result->hasErrors());
     }
 
+    public function testHasErrorsIsTrueWithStdErrContentsEmptyAndNonZeroStatusCode()
+    {
+        $result = $this->createResult(100, null, null);
+
+        $this->assertTrue($result->hasErrors());
+    }
+
     public function testHasErrorsIsFalseWithStdErrContentsEmpty()
     {
         $result = $this->createResult(null, null, '');
