@@ -86,17 +86,19 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     {
         $process = new Process();
 
-        $env = 'dev';
+        $user = 'joey';
         $vars = array(
-            'ENV' => $env
+            'SHELL' => getenv('SHELL'),
+            'PATH' => getenv('PATH'),
+            'USER' => $user
         );
 
-        $process->setCommand("php -r \"echo 'hello';\"");
-//        $process->setEnvironmentVars($vars);
+        $process->setCommand("php -r \"echo getenv('USER');\"");
+        $process->setEnvironmentVars($vars);
         $result = $process->execute();
 
         $this->assertSame(0, $result->getStatus());
-        $this->assertSame('hello', $result->getStdOutContents());
+        $this->assertSame($user, $result->getStdOutContents());
     }
 
     public function testExecuteReturnsExpectedExitCode()

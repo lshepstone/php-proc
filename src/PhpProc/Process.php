@@ -136,6 +136,9 @@ class Process
     /**
      * Sets the array of environment variables to be made available to the command.
      *
+     * This will replace ALL environment variables for the command, which can include the PATH
+     * variable and may cause the command to not even be found, or other undesired effects.
+     *
      * @param array $vars
      *
      * @return Process
