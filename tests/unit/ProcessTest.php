@@ -92,7 +92,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
         );
 
         $process->setCommand("php -r \"echo 'hello';\"");
-        $process->setEnvironmentVars($vars);
+//        $process->setEnvironmentVars($vars);
         $result = $process->execute();
 
         $this->assertSame(0, $result->getStatus());
