@@ -14,7 +14,11 @@ $process = new Process();
 $result = $process
     ->setCommand("/usr/bin/php -r \"echo getenv('USER');\"");
     ->setWorkingDirectory(__DIR__);
-    ->setEnvironmentVars(array('USER' => 'developer'))
+    ->setEnvironmentVars(array(
+        'PATH' => getenv('PATH'),
+        'SHELL' => getenv('SHELL'),
+        'USER' => 'developer'
+    ))
     ->execute();
 
 echo 'Status: ' . $result->getStatus() . PHP_EOL;
