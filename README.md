@@ -17,8 +17,7 @@ $result = $process
     ->setEnvironmentVars(array(
         'PATH' => getenv('PATH'),
         'SHELL' => getenv('SHELL'),
-        'USER' => 'developer'
-    ))
+        'USER' => 'developer'))
     ->execute();
 
 echo 'Status: ' . $result->getStatus() . PHP_EOL;
