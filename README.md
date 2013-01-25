@@ -1,11 +1,9 @@
 PhpProc
 =======
 
-Basic wrapper for the PHP proc_* functions (blocking, single-thread only).
+Basic wrapper for the PHP proc_* functions (blocking, single-thread, limited Windows support).
 
 [![Build Status](https://travis-ci.org/lshepstone/php-proc.png?branch=master)](https://travis-ci.org/lshepstone/php-proc)
-
-Using
 
 ```php
 use \PhpProc\Process;
@@ -27,8 +25,6 @@ if ($result->hasErrors()) {
     echo 'Output: ' . $result->getStdOutContents();
 }
 ```
-
-produces
 
 ```
 Status: 0
