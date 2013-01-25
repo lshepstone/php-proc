@@ -5,7 +5,7 @@ namespace PhpProc;
 /**
  * Exception
  *
- * Interface for all PhpProc\Exception\* exceptions as per the SOLID design principle.
+ * Interface for all PhpProc\Exception\* exceptions.
  */
 interface Exception
 {
