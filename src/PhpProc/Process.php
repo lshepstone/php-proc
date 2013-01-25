@@ -12,6 +12,21 @@ use \PhpProc\Exception\RuntimeException;
 class Process
 {
     /**
+     * stdin identifier (used for pipe index).
+     */
+    const STD_IN = 0;
+
+    /**
+     * stdout identifier (used for pipe index).
+     */
+    const STD_OUT = 1;
+
+    /**
+     * stderr identifier (used for pipe index).
+     */
+    const STD_ERR = 2;
+
+    /**
      * The command to be executed.
      *
      * @var
@@ -40,25 +55,11 @@ class Process
     protected $handle;
 
     /**
-     * Resource handle stdin.
+     * Handles to stdin, stdout and stderr streams.
      *
-     * @var resource
+     * @var array
      */
-    protected $stdInHandle;
-
-    /**
-     * Resource handle stdout.
-     *
-     * @var resource
-     */
-    protected $stdOutHandle;
-
-    /**
-     * Resource handle for stderr.
-     *
-     * @var resource
-     */
-    protected $stdErrHandle;
+    protected $pipes;
 
     /**
      * Determines if the process is currently open.
@@ -66,6 +67,16 @@ class Process
      * @var boolean
      */
     protected $isOpen;
+
+    /**
+     * Constructs the object, optionally setting the command to be executed.
+     *
+     * @param string|null $command
+     */
+    public function __construct($command = null)
+    {
+        null !== $command && $this->setCommand($command);
+    }
 
     /**
      * Implicitly closes any open pipes.
@@ -158,8 +169,8 @@ class Process
     public function execute()
     {
         $this->open();
-        $stdOutContents = stream_get_contents($this->stdOutHandle);
-        $stdErrContents = stream_get_contents($this->stdErrHandle);
+        $stdOutContents = stream_get_contents($this->pipes[self::STD_OUT]);
+        $stdErrContents = stream_get_contents($this->pipes[self::STD_ERR]);
         $status = $this->close();
 
         return new Result($status, $stdOutContents, $stdErrContents);
@@ -192,11 +203,11 @@ class Process
         $handle = proc_open(
             $this->command,
             array(
-                0 => array('pipe', 'r'),
-                1 => array('pipe', 'w'),
-                2 => array('pipe', 'w')
+                self::STD_IN => array('pipe', 'r'),
+                self::STD_OUT => array('pipe', 'w'),
+                self::STD_ERR => array('pipe', 'w')
             ),
-            $pipes,
+            $this->pipes,
             $this->workingDirectory,
             $this->environmentVars
         );
@@ -206,10 +217,6 @@ class Process
         }
 
         $this->handle = $handle;
-        $this->stdInHandle = $pipes[0];
-        $this->stdOutHandle = $pipes[1];
-        $this->stdErrHandle = $pipes[2];
-
         $this->isOpen = true;
 
         return $this;
@@ -222,17 +229,9 @@ class Process
      */
     private function close()
     {
-        if (is_resource($this->stdInHandle)) {
-            fclose($this->stdInHandle);
-        }
-
-        if (is_resource($this->stdOutHandle)) {
-            fclose($this->stdOutHandle);
-        }
-
-        if (is_resource($this->stdErrHandle)) {
-            fclose($this->stdErrHandle);
-        }
+        is_resource($this->pipes[self::STD_IN]) && fclose($this->pipes[self::STD_IN]);
+        is_resource($this->pipes[self::STD_OUT]) && fclose($this->pipes[self::STD_OUT]);
+        is_resource($this->pipes[self::STD_ERR]) && fclose($this->pipes[self::STD_ERR]);
 
         $status = null;
         if (is_resource($this->handle)) {

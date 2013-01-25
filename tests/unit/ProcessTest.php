@@ -6,9 +6,13 @@ use PhpProc\Process;
 
 class ProcessTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetAndSetCommand()
+    public function testConstructWithGetAndSetCommand()
     {
         $command = 'php';
+
+        $process = new Process($command);
+
+        $this->assertSame($command, $process->getCommand());
 
         $process = new Process();
 
